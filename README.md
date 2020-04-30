@@ -2,6 +2,20 @@
 
 My take on a sudoku builder, solver, worker, evaluator.
 
+Current Roadmap:
+
+- [ ] Display a Sudoku board
+  - [ ] Allow Placement of Starter Numbers
+  - [ ] Allow Placement of Pencil Marks
+  - [ ] Allow Placement of Known Guesses
+  - [ ] Announce when Successfully Solved
+- [ ] Develop Solver Algorithm
+- [ ] Display Solving in Progress
+- [ ] Display Puzzle Generator
+- [ ] Display Generation in Progress
+- [ ] Evaluate Solvability Complexity
+- [ ] Persistence / Login
+
 ---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
