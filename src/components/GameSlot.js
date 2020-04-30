@@ -15,6 +15,7 @@ const GameSlot = (props) => {
       className={[styles.GameSlot, marginRight, marginBottom, selected].join(
         " "
       )}
+      onClick={props.toggleSelectedSlot}
     >
       <div className={styles.knownNumber}>
         {props.slot}
