@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Gameboard from "./containers/Gameboard/Gameboard";
+import Gameboard from "./containers/GameBoard/GameBoard";
 import PlayerControls from "./containers/PlayerControls/PlayerControls";
 
 function App() {

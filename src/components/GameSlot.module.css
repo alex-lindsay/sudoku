@@ -1,0 +1,37 @@
+.GameSlot {
+  width: 10%;
+  padding-top: 10%;
+  border: 1px solid #333;
+  position: relative;
+  cursor: pointer;
+}
+
+.GameSlot:hover,
+.GameSlot:active {
+  background-color: lightblue;
+}
+
+.selected {
+  background-color: lightgreen;
+}
+
+.knownNumber {
+  position: absolute;
+  top: 25%;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.marginRight {
+  margin-right: 2%;
+}
+
+.marginBottom {
+  margin-bottom: 2%;
+}
