@@ -1,6 +1,7 @@
 import cloneDeep from "lodash/cloneDeep";
 
 import * as actionTypes from "./actionTypes";
+import * as constants from "../constants";
 
 const initialState = {
   startingPosition: new Array(81).fill([]),
@@ -16,6 +17,12 @@ const toggleSelectedSlotNewState = (selectedSlot, state) => {
     state.selectedSlot = null;
   } else {
     state.selectedSlot = selectedSlot;
+  }
+  if (
+    state.clickMode === constants.CLICKMODE_STARTERS &&
+    state.numberMode !== null
+  ) {
+    state.startingPosition[state.selectedSlot] = state.numberMode;
   }
   return state;
 };

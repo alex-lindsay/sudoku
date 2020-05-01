@@ -7,19 +7,21 @@ import GameSlot from "../../components/GameSlot/GameSlot";
 import styles from "./GameBoard.module.css";
 
 const Gameboard = (props) => {
-  const gameBoard = useSelector((state) => state.currentPosition);
+  const startingPosition = useSelector((state) => state.startingPosition);
+  // const cPosition = useSelector((state) => state.currentPosition);
   const selectedSlot = useSelector((state) => state.selectedSlot);
 
   const dispatch = useDispatch();
 
-  const gameSlots = gameBoard.map((slot, index) => {
+  const gameSlots = startingPosition.map((startingSlot, index) => {
     const isSelected = index === selectedSlot;
     // console.log({ index, selectedSlot, isSelected });
     return (
       <GameSlot
         key={index}
         index={index}
-        slot={slot}
+        startingPosition={startingSlot}
+        // slot={slot}
         selected={isSelected}
         toggleSelectedSlot={() => dispatch(toggleSelectedSlot(index))}
       />

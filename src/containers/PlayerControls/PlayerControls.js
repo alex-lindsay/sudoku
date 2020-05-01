@@ -1,12 +1,11 @@
 import React from "react";
 
-import styles from "./PlayerControls.module.css";
+import * as constants from "../../constants";
+
 import ClickModeInput from "../../components/ClickModeInput/ClickModeInput";
 import NumberModeInput from "../../components/NumberModeInput/NumberModeInput";
 
-const CLICKMODE_STARTERS = "starters";
-const CLICKMODE_PENCILMARKS = "pencilMarks";
-const CLICKMODE_GUESSES = "guesses";
+import styles from "./PlayerControls.module.css";
 
 const PlayerControls = (props) => {
   const numberModeButtons = Array(9)
@@ -16,9 +15,12 @@ const PlayerControls = (props) => {
     <>
       <div className={[styles.PlayerControls, "container-fluid"].join(" ")}>
         <div className="btn-group btn-group-toggle" data-toggle="buttons">
-          <ClickModeInput mode={CLICKMODE_STARTERS} text="Starters" />
-          <ClickModeInput mode={CLICKMODE_PENCILMARKS} text="Pencil Marks" />
-          <ClickModeInput mode={CLICKMODE_GUESSES} text="Guesses" />
+          <ClickModeInput mode={constants.CLICKMODE_STARTERS} text="Starters" />
+          <ClickModeInput
+            mode={constants.CLICKMODE_PENCILMARKS}
+            text="Pencil Marks"
+          />
+          <ClickModeInput mode={constants.CLICKMODE_GUESSES} text="Guesses" />
         </div>
       </div>
       <div

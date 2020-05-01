@@ -17,10 +17,8 @@ const GameSlot = (props) => {
       )}
       onClick={props.toggleSelectedSlot}
     >
-      <div className={styles.knownNumber}>
-        {props.slot}
-        {props.index}
-      </div>
+      <div className={styles.startingPosition}>{props.startingPosition}</div>
+      <div className={styles.knownNumber}>{/* {props.index} */}</div>
     </div>
   );
 };
