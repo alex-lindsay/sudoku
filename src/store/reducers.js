@@ -16,6 +16,8 @@ const initialState = {
 };
 
 const checkForSolved = (state) => {
+  //TODO change this to compare all guesses or starting positions to the finished state
+  //TODO make the finished state remote only so it can't be peeked at in the state
   let isSolved = true;
   for (let index = 0; index < 81; index++) {
     if (
