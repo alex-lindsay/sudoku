@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleSelectedSlot } from "../../store/actions";
 
-import GameSlot from "../../components/GameSlot";
+import GameSlot from "../../components/GameSlot/GameSlot";
 
 import styles from "./GameBoard.module.css";
 

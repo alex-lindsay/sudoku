@@ -1,0 +1,9 @@
+.NumberModeInput {
+  width: 30%;
+  margin: 2px;
+}
+
+.NumberModeInputActive {
+  background-color: lightskyblue !important;
+  color: black;
+}

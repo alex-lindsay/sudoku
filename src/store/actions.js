@@ -6,3 +6,17 @@ export const toggleSelectedSlot = (selectedSlot) => {
     selectedSlot,
   };
 };
+
+export const setClickMode = (clickMode) => {
+  return {
+    type: actionTypes.SET_CLICK_MODE,
+    clickMode,
+  };
+};
+
+export const setNumberMode = (numberMode) => {
+  return {
+    type: actionTypes.SET_NUMBER_MODE,
+    numberMode,
+  };
+};
