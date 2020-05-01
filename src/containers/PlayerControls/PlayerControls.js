@@ -43,6 +43,18 @@ const PlayerControls = (props) => {
           onClickAction={actions.resetBoard}
           text="Reset Board"
         />
+        <PlayerControlButton
+          onClickAction={actions.randomBoard}
+          text="Random Board"
+        />
+        <PlayerControlButton
+          onClickAction={actions.addPencilMarks}
+          text="Add Pencil Marks"
+        />
+        <PlayerControlButton
+          onClickAction={actions.clearPencilMarks}
+          text="Clear Pencil Marks"
+        />
       </div>
     </>
   );

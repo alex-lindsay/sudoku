@@ -3,3 +3,5 @@ export const SET_CLICK_MODE = "SET_CLICK_MODE";
 export const SET_NUMBER_MODE = "SET_NUMBER_MODE";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const RESET_BOARD = "RESET_BOARD";
+export const ADD_PENCIL_MARKS = "ADD_PENCIL_MARKS";
+export const CLEAR_PENCIL_MARKS = "CLEAR_PENCIL_MARKS";

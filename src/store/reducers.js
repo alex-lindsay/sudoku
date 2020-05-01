@@ -188,6 +188,30 @@ const resetBoard = () => {
   return cloneDeep(initialState);
 };
 
+const addPencilMarks = (state, action) => {
+  if (Array.isArray(action.pencilMarks)) {
+    for (let index = 0; index < action.pencilMarks.length; index++) {
+      let mark = action.pencilMarks[index];
+      if (
+        mark["slot"] === undefined ||
+        mark["slot"] < 0 ||
+        mark["slot"] >= 81 ||
+        !Array.isArray(mark["pencilMarks"])
+      ) {
+        return state;
+      } else {
+        state.pencilMarks[mark["slot"]] = mark["pencilMarks"];
+      }
+    }
+  }
+  return state;
+};
+
+const clearPencilMarks = (state) => {
+  state.pencilMarks = cloneDeep(initialState.pencilMarks);
+  return state;
+};
+
 export default function (oldState = initialState, action) {
   let state = cloneDeep(oldState);
   switch (action.type) {
@@ -201,6 +225,10 @@ export default function (oldState = initialState, action) {
       return clearErrors(state);
     case actionTypes.RESET_BOARD:
       return resetBoard();
+    case actionTypes.ADD_PENCIL_MARKS:
+      return addPencilMarks(state, action);
+    case actionTypes.CLEAR_PENCIL_MARKS:
+      return clearPencilMarks(state);
     default:
       return state;
   }
