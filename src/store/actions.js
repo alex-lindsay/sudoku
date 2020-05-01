@@ -26,3 +26,9 @@ export const clearErrors = () => {
     type: actionTypes.CLEAR_ERRORS,
   };
 };
+
+export const resetBoard = () => {
+  return {
+    type: actionTypes.RESET_BOARD,
+  };
+};

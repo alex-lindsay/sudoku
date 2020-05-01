@@ -1,9 +1,11 @@
 import React from "react";
 
+import * as actions from "../../store/actions";
 import * as constants from "../../constants";
 
 import ClickModeInput from "../../components/ClickModeInput/ClickModeInput";
 import NumberModeInput from "../../components/NumberModeInput/NumberModeInput";
+import PlayerControlButton from "../../components/PlayerControlButton/PlayerControlButton";
 
 import styles from "./PlayerControls.module.css";
 
@@ -35,6 +37,12 @@ const PlayerControls = (props) => {
         ].join(" ")}
       >
         {numberModeButtons}
+      </div>
+      <div className={[styles.PlayerControls, "container-fluid"].join(" ")}>
+        <PlayerControlButton
+          onClickAction={actions.resetBoard}
+          text="Reset Board"
+        />
       </div>
     </>
   );

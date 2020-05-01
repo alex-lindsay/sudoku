@@ -2,3 +2,4 @@ export const TOGGLE_SELECTED_SLOT = "TOGGLE_SELECTED_SLOT";
 export const SET_CLICK_MODE = "SET_CLICK_MODE";
 export const SET_NUMBER_MODE = "SET_NUMBER_MODE";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const RESET_BOARD = "RESET_BOARD";

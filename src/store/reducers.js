@@ -118,6 +118,10 @@ const clearErrors = (state) => {
   return state;
 };
 
+const resetBoard = () => {
+  return initialState;
+};
+
 export default function (oldState = initialState, action) {
   let state = cloneDeep(oldState);
   switch (action.type) {
@@ -129,6 +133,8 @@ export default function (oldState = initialState, action) {
       return setNumberModeNewState(action.numberMode, state);
     case actionTypes.CLEAR_ERRORS:
       return clearErrors(state);
+    case actionTypes.RESET_BOARD:
+      return resetBoard();
     default:
       return state;
   }
