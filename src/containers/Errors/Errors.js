@@ -15,7 +15,6 @@ const Errors = (props) => {
       className="alert alert-danger"
       role="alert"
       onClick={() => {
-        alert("test");
         dispatch(clearErrors());
       }}
     >

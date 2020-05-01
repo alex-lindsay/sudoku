@@ -8,9 +8,27 @@ const initialState = {
   errorPositions: [],
   startingPosition: new Array(81).fill(null),
   guesses: new Array(81).fill(null),
+  pencilMarks: new Array(81).fill(null),
   selectedSlot: null,
   clickMode: null,
   numberMode: null,
+  isSolved: false,
+};
+
+const checkForSolved = (state) => {
+  let isSolved = true;
+  for (let index = 0; index < 81; index++) {
+    if (
+      state.startingPosition[index] === null &&
+      state.guesses[index] === null
+    ) {
+      isSolved = false;
+      break;
+    }
+  }
+  state.isSolved = isSolved;
+  // console.log("checkForSolved result", isSolved);
+  return state;
 };
 
 const validatePosition = (state) => {
@@ -29,7 +47,7 @@ const validatePosition = (state) => {
       let row = Math.floor(index / 9);
       let col = index % 9;
       let blk = Math.floor(row / 3) * 3 + Math.floor(col / 3);
-      console.log({ index, val, row, col, blk });
+      // console.log({ index, val, row, col, blk });
 
       if (rows[row] === undefined) {
         rows[row] = [];
@@ -69,18 +87,61 @@ const validatePosition = (state) => {
       }
     }
   }
+  if (state.errorPositions.length > 0) {
+    state.selectedSlot = null;
+  }
   return state;
 };
 
-const setSelectedSlotAsStarter = (state) => {
+const setSelectedSlotAsStarterAsNeeded = (state) => {
   if (
     state.clickMode === constants.CLICKMODE_STARTERS &&
-    state.numberMode !== null
+    state.numberMode !== null &&
+    state.guesses[state.selectedSlot] === null
   ) {
     if (state.startingPosition[state.selectedSlot] !== state.numberMode) {
       state.startingPosition[state.selectedSlot] = state.numberMode;
     } else {
       state.startingPosition[state.selectedSlot] = null;
+    }
+  }
+  return state;
+};
+
+const setSelectedSlotAsGuessAsNeeded = (state) => {
+  if (
+    state.clickMode === constants.CLICKMODE_GUESSES &&
+    state.numberMode !== null &&
+    state.startingPosition[state.selectedSlot] === null
+  ) {
+    state.pencilMarks[state.selectedSlot] = [];
+    if (state.guesses[state.selectedSlot] !== state.numberMode) {
+      state.guesses[state.selectedSlot] = state.numberMode;
+    } else {
+      state.guesses[state.selectedSlot] = null;
+    }
+  }
+  return state;
+};
+
+const setSelectedSlotAsPencilMarkAsNeeded = (state) => {
+  if (
+    state.clickMode === constants.CLICKMODE_PENCILMARKS &&
+    state.numberMode !== null &&
+    state.startingPosition[state.selectedSlot] === null
+  ) {
+    state.guesses[state.selectedSlot] = null;
+    if (state.pencilMarks[state.selectedSlot] === null) {
+      state.pencilMarks[state.selectedSlot] = [];
+    }
+    if (
+      state.pencilMarks[state.selectedSlot].indexOf(state.numberMode) === -1
+    ) {
+      state.pencilMarks[state.selectedSlot].push(state.numberMode);
+    } else {
+      state.pencilMarks[state.selectedSlot] = state.pencilMarks[
+        state.selectedSlot
+      ].filter((val) => val !== state.numberMode);
     }
   }
   return state;
@@ -93,8 +154,11 @@ const toggleSelectedSlotNewState = (selectedSlot, state) => {
   } else {
     state.selectedSlot = selectedSlot;
   }
-  state = setSelectedSlotAsStarter(state);
+  state = setSelectedSlotAsStarterAsNeeded(state);
+  state = setSelectedSlotAsGuessAsNeeded(state);
+  state = setSelectedSlotAsPencilMarkAsNeeded(state);
   state = validatePosition(state);
+  state = checkForSolved(state);
   return state;
 };
 
@@ -119,7 +183,7 @@ const clearErrors = (state) => {
 };
 
 const resetBoard = () => {
-  return initialState;
+  return cloneDeep(initialState);
 };
 
 export default function (oldState = initialState, action) {

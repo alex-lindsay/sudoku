@@ -1,4 +1,7 @@
 import React from "react";
+
+import PencilMark from "../PencilMark/PencilMark";
+
 import styles from "./GameSlot.module.css";
 
 const GameSlot = (props) => {
@@ -9,6 +12,9 @@ const GameSlot = (props) => {
       ? styles.marginBottom
       : null;
   const selected = props.selected ? styles.selected : null;
+  const pencilMarkItems = props.pencilMarks
+    ? props.pencilMarks.map((mark) => <PencilMark key={mark} number={mark} />)
+    : null;
 
   return (
     <div
@@ -18,6 +24,8 @@ const GameSlot = (props) => {
       onClick={props.toggleSelectedSlot}
     >
       <div className={styles.startingPosition}>{props.startingPosition}</div>
+      <div className={styles.guess}>{props.guess}</div>
+      <div className={styles.pencilMarks}>{pencilMarkItems}</div>
     </div>
   );
 };

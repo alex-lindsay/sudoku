@@ -8,6 +8,8 @@ import styles from "./GameBoard.module.css";
 
 const Gameboard = (props) => {
   const startingPosition = useSelector((state) => state.startingPosition);
+  const guesses = useSelector((state) => state.guesses);
+  const pencilMarks = useSelector((state) => state.pencilMarks);
   const selectedSlot = useSelector((state) => state.selectedSlot);
   // TODO add error positions
 
@@ -21,6 +23,8 @@ const Gameboard = (props) => {
         key={index}
         index={index}
         startingPosition={startingSlot}
+        guess={guesses[index]}
+        pencilMarks={pencilMarks[index]}
         selected={isSelected}
         toggleSelectedSlot={() => dispatch(toggleSelectedSlot(index))}
       />
@@ -29,7 +33,6 @@ const Gameboard = (props) => {
 
   return (
     <div className={[styles.GameBoard, "container-md"].join(" ")}>
-      <div>This is the gameboard.</div>
       <div
         className={[
           styles.GameGrid,

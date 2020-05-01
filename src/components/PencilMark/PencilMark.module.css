@@ -1,0 +1,78 @@
+.PencilMark {
+  position: absolute;
+  z-index: 500;
+  top: 15%;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 30%;
+  height: 30%;
+  font-size: 50%;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  color: darkgreen;
+}
+
+.PencilMark1 {
+  top: 10%;
+  left: 5%;
+  bottom: 0;
+  right: 0;
+}
+
+.PencilMark2 {
+  top: 10%;
+  left: 35%;
+  bottom: 0;
+  right: 0;
+}
+
+.PencilMark3 {
+  top: 10%;
+  left: 65%;
+  bottom: 0;
+  right: 0;
+}
+
+.PencilMark4 {
+  top: 40%;
+  left: 5%;
+  bottom: 0;
+  right: 0;
+}
+
+.PencilMark5 {
+  top: 40%;
+  left: 35%;
+  bottom: 0;
+  right: 0;
+}
+
+.PencilMark6 {
+  top: 40%;
+  left: 65%;
+  bottom: 0;
+  right: 0;
+}
+
+.PencilMark7 {
+  top: 70%;
+  left: 5%;
+  bottom: 0;
+  right: 0;
+}
+
+.PencilMark8 {
+  top: 70%;
+  left: 35%;
+  bottom: 0;
+  right: 0;
+}
+
+.PencilMark9 {
+  top: 70%;
+  left: 65%;
+  bottom: 0;
+  right: 0;
+}
