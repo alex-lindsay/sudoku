@@ -10,7 +10,9 @@ import styles from "./PlayerControls.module.css";
 const PlayerControls = (props) => {
   const numberModeButtons = Array(9)
     .fill("")
-    .map((val, index) => <NumberModeInput number={index + 1} />);
+    .map((val, index) => (
+      <NumberModeInput key={index + 1} number={index + 1} />
+    ));
   return (
     <>
       <div className={[styles.PlayerControls, "container-fluid"].join(" ")}>

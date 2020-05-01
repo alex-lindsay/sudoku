@@ -1,13 +1,18 @@
 import React from "react";
-import "./App.css";
+
+import Errors from "./containers/Errors/Errors";
 import Gameboard from "./containers/GameBoard/GameBoard";
 import PlayerControls from "./containers/PlayerControls/PlayerControls";
+
+import "./App.css";
 
 function App() {
   return (
     <div className="App container">
       <div className="row">
-        <header className="App-header"></header>
+        <header className="App-header">
+          <Errors />
+        </header>
       </div>
       <div className="row">
         <div className="col-8">

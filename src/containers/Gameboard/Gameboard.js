@@ -8,8 +8,8 @@ import styles from "./GameBoard.module.css";
 
 const Gameboard = (props) => {
   const startingPosition = useSelector((state) => state.startingPosition);
-  // const cPosition = useSelector((state) => state.currentPosition);
   const selectedSlot = useSelector((state) => state.selectedSlot);
+  // TODO add error positions
 
   const dispatch = useDispatch();
 
@@ -21,7 +21,6 @@ const Gameboard = (props) => {
         key={index}
         index={index}
         startingPosition={startingSlot}
-        // slot={slot}
         selected={isSelected}
         toggleSelectedSlot={() => dispatch(toggleSelectedSlot(index))}
       />
