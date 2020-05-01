@@ -2,7 +2,6 @@ import cloneDeep from "lodash/cloneDeep";
 
 import * as actionTypes from "./actionTypes";
 import * as constants from "../constants";
-import PlayerControls from "../containers/PlayerControls/PlayerControls";
 
 const initialState = {
   errorMessages: [],
@@ -113,6 +112,12 @@ const setNumberModeNewState = (numberMode, state) => {
   return state;
 };
 
+const clearErrors = (state) => {
+  state.errorMessages = [];
+  state.errorPositions = [];
+  return state;
+};
+
 export default function (oldState = initialState, action) {
   let state = cloneDeep(oldState);
   switch (action.type) {
@@ -122,6 +127,8 @@ export default function (oldState = initialState, action) {
       return setClickModeNewState(action.clickMode, state);
     case actionTypes.SET_NUMBER_MODE:
       return setNumberModeNewState(action.numberMode, state);
+    case actionTypes.CLEAR_ERRORS:
+      return clearErrors(state);
     default:
       return state;
   }

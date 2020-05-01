@@ -20,3 +20,9 @@ export const setNumberMode = (numberMode) => {
     numberMode,
   };
 };
+
+export const clearErrors = () => {
+  return {
+    type: actionTypes.CLEAR_ERRORS,
+  };
+};

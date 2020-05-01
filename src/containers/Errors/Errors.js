@@ -10,12 +10,26 @@ const Errors = (props) => {
   const dispatch = useDispatch();
 
   const errorMessageAlerts = errorMessages.map((errorMessage, index) => (
-    <div key={index} className="alert alert-danger" role="alert">
+    <div
+      key={index}
+      className="alert alert-danger"
+      role="alert"
+      onClick={() => {
+        alert("test");
+        dispatch(clearErrors());
+      }}
+    >
       {errorMessage}
     </div>
   ));
 
-  return <div>{errorMessageAlerts}</div>;
+  const isVisible = errorMessages.length > 0 ? null : styles.hidden;
+
+  return (
+    <div className={[styles.ErrorContainer, isVisible].join(" ")}>
+      {errorMessageAlerts}
+    </div>
+  );
 };
 
 export default Errors;
