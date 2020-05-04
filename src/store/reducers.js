@@ -2,6 +2,7 @@ import cloneDeep from "lodash/cloneDeep";
 
 import * as actionTypes from "./actionTypes";
 import * as constants from "../constants";
+import * as common from "../common";
 
 const initialState = {
   errorMessages: [],
@@ -189,21 +190,45 @@ const resetBoard = () => {
 };
 
 const addPencilMarks = (state, action) => {
-  if (Array.isArray(action.pencilMarks)) {
-    for (let index = 0; index < action.pencilMarks.length; index++) {
-      let mark = action.pencilMarks[index];
-      if (
-        mark["slot"] === undefined ||
-        mark["slot"] < 0 ||
-        mark["slot"] >= 81 ||
-        !Array.isArray(mark["pencilMarks"])
-      ) {
-        return state;
-      } else {
-        state.pencilMarks[mark["slot"]] = mark["pencilMarks"];
-      }
-    }
+  if (action.slots === undefined) {
+    return state;
   }
+  for (let slot of action.slots) {
+    if (state.startingPosition[slot] !== null || state.guesses[slot] !== null) {
+      continue;
+    }
+    let row = common.rowFromIndex(slot);
+    let col = common.colFromIndex(slot);
+    let blk = common.blkFromIndex(slot);
+    let allMarks = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let notMarks = []
+      .concat(
+        common
+          .rowIndices(row, slot)
+          .map((index) => state.startingPosition[index]),
+        common.rowIndices(row, slot).map((index) => state.guesses[index]),
+        common
+          .colIndices(col, slot)
+          .map((index) => state.startingPosition[index]),
+        common.colIndices(col, slot).map((index) => state.guesses[index]),
+        common
+          .blkIndices(blk, slot)
+          .map((index) => state.startingPosition[index]),
+        common.blkIndices(blk, slot).map((index) => state.guesses[index])
+      )
+      .filter((val) => val !== null);
+    // console.log({
+    //   slot,
+    //   rowIndices: common.rowIndices(row, slot),
+    //   colIndices: common.colIndices(col, slot),
+    //   blkIndices: common.blkIndices(blk, slot),
+    //   notMarks,
+    // });
+    let marks = allMarks.filter((val) => notMarks.indexOf(val) === -1);
+
+    state.pencilMarks[slot] = marks;
+  }
+
   return state;
 };
 

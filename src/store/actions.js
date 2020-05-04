@@ -40,28 +40,26 @@ export const randomBoard = () => {
   };
 };
 
-export const addPencilMarksAction = (pencilMarks) => {
+export const addPencilMarksAction = (slots) => {
   return {
     type: actionTypes.ADD_PENCIL_MARKS,
-    pencilMarks,
+    slots,
   };
 };
 
 export const addPencilMarks = (slot) => {
   return (dispatch) => {
-    let pencilMarks = [];
+    if (slot === undefined) {
+      dispatch(clearPencilMarks());
+    }
     if (slot === undefined) {
       slot = 0;
     }
-    console.log(slot);
-    for (let index = 0; index < 3; index++) {
-      pencilMarks.push({ slot, pencilMarks: [1, 3, 5] });
-      slot++;
-    }
+
     setTimeout(() => {
-      dispatch(addPencilMarksAction(pencilMarks));
       if (slot < 81) {
-        dispatch(addPencilMarks(slot));
+        dispatch(addPencilMarksAction([slot, slot + 1, slot + 2]));
+        dispatch(addPencilMarks(slot + 3));
       }
     }, 500);
   };
