@@ -1,3 +1,4 @@
+import * as constants from "../../constants";
 import React from "react";
 
 import PencilMark from "../PencilMark/PencilMark";
@@ -6,9 +7,13 @@ import styles from "./GameSlot.module.css";
 
 const GameSlot = (props) => {
   const marginRight =
-    props.index % 9 === 2 || props.index % 9 === 5 ? styles.marginRight : null;
+    props.index % constants.BOARD_WIDTH === 2 ||
+    props.index % constants.BOARD_WIDTH === 5
+      ? styles.marginRight
+      : null;
   const marginBottom =
-    Math.floor(props.index / 9) === 2 || Math.floor(props.index / 9) === 5
+    Math.floor(props.index / constants.BOARD_WIDTH) === 2 ||
+    Math.floor(props.index / constants.BOARD_WIDTH) === 5
       ? styles.marginBottom
       : null;
   const selected = props.selected ? styles.selected : null;

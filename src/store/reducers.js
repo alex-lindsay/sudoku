@@ -7,9 +7,9 @@ import * as common from "../common";
 const initialState = {
   errorMessages: [],
   errorPositions: [],
-  startingPosition: new Array(81).fill(null),
-  guesses: new Array(81).fill(null),
-  pencilMarks: new Array(81).fill(null),
+  startingPosition: new Array(constants.BOARD_SLOTS).fill(null),
+  guesses: new Array(constants.BOARD_SLOTS).fill(null),
+  pencilMarks: new Array(constants.BOARD_SLOTS).fill(null),
   selectedSlot: null,
   clickMode: null,
   numberMode: null,
@@ -20,7 +20,7 @@ const checkForSolved = (state) => {
   //TODO change this to compare all guesses or starting positions to the finished state
   //TODO make the finished state remote only so it can't be peeked at in the state
   let isSolved = true;
-  for (let index = 0; index < 81; index++) {
+  for (let index = 0; index < constants.BOARD_SLOTS; index++) {
     if (
       state.startingPosition[index] === null &&
       state.guesses[index] === null
@@ -41,14 +41,14 @@ const validatePosition = (state) => {
   let cols = [];
   let blks = [];
 
-  for (let index = 0; index < 81; index++) {
+  for (let index = 0; index < constants.BOARD_SLOTS; index++) {
     let val =
       state.startingPosition[index] !== null
         ? state.startingPosition[index]
         : state.guesses[index];
     if (val !== null) {
-      let row = Math.floor(index / 9);
-      let col = index % 9;
+      let row = Math.floor(index / constants.BOARD_WIDTH);
+      let col = index % constants.BOARD_WIDTH;
       let blk = Math.floor(row / 3) * 3 + Math.floor(col / 3);
       // console.log({ index, val, row, col, blk });
 
@@ -104,6 +104,7 @@ const setSelectedSlotAsStarterAsNeeded = (state) => {
   ) {
     if (state.startingPosition[state.selectedSlot] !== state.numberMode) {
       state.startingPosition[state.selectedSlot] = state.numberMode;
+      state.pencilMarks[state.selectedSlot] = [];
     } else {
       state.startingPosition[state.selectedSlot] = null;
     }
@@ -189,6 +190,10 @@ const resetBoard = () => {
   return cloneDeep(initialState);
 };
 
+const randomBoard = () => {
+  let state = cloneDeep(initialState);
+};
+
 const addPencilMarks = (state, action) => {
   if (action.slots === undefined) {
     return state;
@@ -200,7 +205,10 @@ const addPencilMarks = (state, action) => {
     let row = common.rowFromIndex(slot);
     let col = common.colFromIndex(slot);
     let blk = common.blkFromIndex(slot);
-    let allMarks = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let allMarks = [];
+    for (let i = 1; i <= constants.BOARD_WIDTH; i++) {
+      allMarks.push(i);
+    }
     let notMarks = []
       .concat(
         common
@@ -250,6 +258,8 @@ export default function (oldState = initialState, action) {
       return clearErrors(state);
     case actionTypes.RESET_BOARD:
       return resetBoard();
+    case actionTypes.RANDOM_BOARD:
+      return randomBoard();
     case actionTypes.ADD_PENCIL_MARKS:
       return addPencilMarks(state, action);
     case actionTypes.CLEAR_PENCIL_MARKS:

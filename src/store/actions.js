@@ -1,4 +1,5 @@
 import * as actionTypes from "./actionTypes";
+import * as constants from "../constants";
 
 export const toggleSelectedSlot = (selectedSlot) => {
   return {
@@ -34,9 +35,8 @@ export const resetBoard = () => {
 };
 
 export const randomBoard = () => {
-  console.log("randomBoard");
   return {
-    type: actionTypes.RESET_BOARD,
+    type: actionTypes.RANDOM_BOARD,
   };
 };
 
@@ -57,7 +57,7 @@ export const addPencilMarks = (slot) => {
     }
 
     setTimeout(() => {
-      if (slot < 81) {
+      if (slot < constants.BOARD_SLOTS) {
         dispatch(addPencilMarksAction([slot, slot + 1, slot + 2]));
         dispatch(addPencilMarks(slot + 3));
       }
