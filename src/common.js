@@ -1,20 +1,24 @@
 import * as constants from "./constants";
 
+export const symbols = "123456789ABCDEF0";
+
 export const rowFromIndex = (index) =>
   Math.floor(index / constants.BOARD_WIDTH);
 export const colFromIndex = (index) => index % constants.BOARD_WIDTH;
 export const blkFromIndex = (index) =>
-  Math.floor(rowFromIndex(index) / 3) * 3 + Math.floor(colFromIndex(index) / 3);
+  Math.floor(rowFromIndex(index) / constants.BOARD_ORDER) *
+    constants.BOARD_ORDER +
+  Math.floor(colFromIndex(index) / constants.BOARD_ORDER);
 
 export const rowIndexToIndex = (row, index) =>
   row * constants.BOARD_WIDTH + index;
 export const colIndexToIndex = (col, index) =>
   index * constants.BOARD_WIDTH + col;
 export const blkIndexToIndex = (blk, index) =>
-  Math.floor(blk / 3) * 27 +
-  (blk % 3) * 3 +
-  Math.floor(index / 3) * constants.BOARD_WIDTH +
-  (index % 3);
+  Math.floor(blk / constants.BOARD_ORDER) * constants.BOARD_ORDER ** 3 +
+  (blk % constants.BOARD_ORDER) * constants.BOARD_ORDER +
+  Math.floor(index / constants.BOARD_ORDER) * constants.BOARD_WIDTH +
+  (index % constants.BOARD_ORDER);
 
 export const grpIndices = (rule, grp, excluding) => {
   let result = [];
