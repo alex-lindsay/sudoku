@@ -262,10 +262,46 @@ const resetBoard = () => {
 };
 
 const randomBoard = () => {
-  // pick a position
-  // pick a number
-  // check to see if puzzle is still valid and solvable
-  // if there are enough clues to solve it, unset the add clue flag else set the clue flag
+  //TODO - develop a smarter way of building a board
+  let numberOfClues = Math.floor(17 + 10 * Math.random());
+  let state = cloneDeep(initialState);
+  let slots = [];
+  // console.log({ constants });
+  for (let index = 0; index < constants.BOARD_SLOTS; index++) {
+    slots.push(index);
+  }
+  let numbers = [];
+  for (let index = 0; index < constants.BOARD_WIDTH; index++) {
+    numbers.push(index + 1);
+  }
+  for (let clueNumber = 1; clueNumber < numberOfClues; clueNumber++) {
+    let tempState = cloneDeep(state);
+    let tempNumbers = cloneDeep(numbers);
+    let position = Math.floor(Math.random() * slots.length);
+    while (tempNumbers.length > 0) {
+      let numberPosition = Math.floor(Math.random() * constants.BOARD_WIDTH);
+      let number = numbers[numberPosition];
+      tempState.startingPosition[position] = number;
+      // console.log({
+      //   slots,
+      //   clueNumber,
+      //   position,
+      //   number,
+      //   valid: isValidPosition(tempState),
+      // });
+      if (isValidPosition(tempState).isValid) {
+        state = tempState;
+        slots.splice(position, 1);
+        break;
+      } else {
+        tempNumbers.splice(numberPosition, 1);
+      }
+    }
+    if (tempNumbers.length === 0) {
+      state.errorMessages.push("Unable to add any more clues to the grid.");
+    }
+  }
+  return state;
 };
 
 const addPencilMarks = (state, action) => {
