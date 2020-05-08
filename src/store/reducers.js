@@ -16,6 +16,8 @@ const initialState = {
   numberMode: null,
   isSolving: false,
   isSolved: false,
+  solverHasChangedGuesses: false,
+  solverIsChecking: {},
   buildingBoard: false,
   currentStrategy: null,
   currentStrategyStage: null,
@@ -366,6 +368,7 @@ const solveBoard = (state) => {
     if (state.currentStrategy === null) {
       state.currentStrategy = 0;
       state.currentStrategyStage = null;
+      state.solverHasChangedGuesses = false;
     }
     // If there is no stage set, choose the first stage,
     // otherwise move to the next stage.
@@ -385,9 +388,22 @@ const solveBoard = (state) => {
     if (strategies[state.currentStrategy] !== undefined) {
       state = strategies[state.currentStrategy].fn(state);
     } else {
-      state.errorMessages.push(
-        "This puzzle appears not to be solvable by normal strategies."
-      );
+      // check to see if the puzzle is solved.  if so give a message
+      state = checkForSolved(state);
+      if (state.isSolved) {
+        state.errorMessages.push("THE PUZZLE HAS BEEN SOLVED!");
+      } else {
+        // if not, then check to see if the solver has updated things
+        if (state.solverHasChangedGuesses) {
+          state.currentStrategyStage = null;
+          state.currentStrategy = null;
+        } else {
+          state.errorMessages.push(
+            "This puzzle appears not to be solvable by normal strategies."
+          );
+        }
+        // if so, then restart the strategies, if not show an error message
+      }
     }
   }
   return state;

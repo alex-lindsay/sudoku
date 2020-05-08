@@ -17,15 +17,21 @@ const GameSlot = (props) => {
       ? styles.marginBottom
       : null;
   const selected = props.selected ? styles.selected : null;
-  const pencilMarkItems = props.pencilMarks
-    ? props.pencilMarks.map((mark) => <PencilMark key={mark} number={mark} />)
-    : null;
+  const checking = props.isChecking ? styles.checking : null;
+  const pencilMarkItems =
+    props.pencilMarks && !props.guess
+      ? props.pencilMarks.map((mark) => <PencilMark key={mark} number={mark} />)
+      : null;
 
   return (
     <div
-      className={[styles.GameSlot, marginRight, marginBottom, selected].join(
-        " "
-      )}
+      className={[
+        styles.GameSlot,
+        marginRight,
+        marginBottom,
+        selected,
+        checking,
+      ].join(" ")}
       onClick={props.toggleSelectedSlot}
     >
       <div className={styles.startingPosition}>{props.startingPosition}</div>

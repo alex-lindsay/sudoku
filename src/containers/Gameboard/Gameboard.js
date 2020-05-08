@@ -11,12 +11,14 @@ const Gameboard = (props) => {
   const guesses = useSelector((state) => state.guesses);
   const pencilMarks = useSelector((state) => state.pencilMarks);
   const selectedSlot = useSelector((state) => state.selectedSlot);
+  const checkingSlots = useSelector((state) => state.solverIsChecking);
   // TODO add error positions
 
   const dispatch = useDispatch();
 
   const gameSlots = startingPosition.map((startingSlot, index) => {
     const isSelected = index === selectedSlot;
+    const isChecking = checkingSlots[index] !== undefined;
     // console.log({ index, selectedSlot, isSelected });
     return (
       <GameSlot
@@ -26,6 +28,7 @@ const Gameboard = (props) => {
         guess={guesses[index]}
         pencilMarks={pencilMarks[index]}
         selected={isSelected}
+        isChecking={isChecking}
         toggleSelectedSlot={() => dispatch(toggleSelectedSlot(index))}
       />
     );

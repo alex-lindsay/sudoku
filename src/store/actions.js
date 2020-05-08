@@ -67,7 +67,7 @@ export const addPencilMarks = (slot) => {
         dispatch(addPencilMarksAction([slot, slot + 1, slot + 2]));
         dispatch(addPencilMarks(slot + 3));
       }
-    }, 500);
+    }, constants.DELAY_PENCIL_MARKS);
   };
 };
 
@@ -86,11 +86,14 @@ export const solveBoardAction = () => {
 export const solveBoard = () => {
   return (dispatch, getState) => {
     let state = getState();
+    if (state.currentStrategy === null) {
+      dispatch(addPencilMarks(0));
+    }
     if (state.errorMessages.length === 0 && !state.isSolved) {
       dispatch(solveBoardAction());
       setTimeout(() => {
         dispatch(solveBoard());
-      }, 500);
+      }, constants.DELAY_SOLVE_STAGE);
     }
   };
 };
