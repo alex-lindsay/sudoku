@@ -15,6 +15,9 @@ const initialState = {
   numberMode: null,
   isSolved: false,
   buildingBoard: false,
+  isSolving: false,
+  currentStrategy: null,
+  currentStrategyStage: null,
 };
 
 const checkForSolved = (state) => {

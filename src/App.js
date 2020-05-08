@@ -11,6 +11,7 @@ function App() {
     <div className="App container">
       <div className="row">
         <header className="App-header">
+          <h1>Sudoku Builder/Solver</h1>
           <Errors />
         </header>
       </div>

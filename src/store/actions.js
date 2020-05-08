@@ -76,3 +76,13 @@ export const clearPencilMarks = () => {
     type: actionTypes.CLEAR_PENCIL_MARKS,
   };
 };
+
+export const solveBoardAction = (strategy, stage) => {
+  return {
+    type: actionTypes.SOLVE_BOARD,
+  };
+};
+
+export const solveBoard = () => {
+  return (dispatch) => {};
+};
