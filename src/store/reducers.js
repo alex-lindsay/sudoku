@@ -14,6 +14,7 @@ const initialState = {
   clickMode: null,
   numberMode: null,
   isSolved: false,
+  buildingBoard: false,
 };
 
 const checkForSolved = (state) => {
@@ -35,8 +36,76 @@ const checkForSolved = (state) => {
 };
 
 const validatePosition = (state) => {
-  state.errorMessages = [];
-  state.errorPositions = [];
+  let validation = isValidPosition(state);
+  state.errorPositions = cloneDeep(validation.errorPositions);
+  state.errorMessages = cloneDeep(validation.errorMessages);
+  // state.errorMessages = [];
+  // state.errorPositions = [];
+  // let rows = [];
+  // let cols = [];
+  // let blks = [];
+
+  // for (let index = 0; index < constants.BOARD_SLOTS; index++) {
+  //   let val =
+  //     state.startingPosition[index] !== null
+  //       ? state.startingPosition[index]
+  //       : state.guesses[index];
+  //   if (val !== null) {
+  //     let row = Math.floor(index / constants.BOARD_WIDTH);
+  //     let col = index % constants.BOARD_WIDTH;
+  //     let blk = Math.floor(row / 3) * 3 + Math.floor(col / 3);
+  //     // console.log({ index, val, row, col, blk });
+
+  //     if (rows[row] === undefined) {
+  //       rows[row] = [];
+  //     }
+  //     if (cols[col] === undefined) {
+  //       cols[col] = [];
+  //     }
+  //     if (blks[blk] === undefined) {
+  //       blks[blk] = [];
+  //     }
+
+  //     if (rows[row][val] === true) {
+  //       state.errorPositions.push(index);
+  //       state.errorMessages.push(
+  //         `${val} occurs more than once in row ${row + 1}`
+  //       );
+  //     } else {
+  //       rows[row][val] = true;
+  //     }
+
+  //     if (cols[col][val]) {
+  //       state.errorPositions.push(index);
+  //       state.errorMessages.push(
+  //         `${val} occurs more than once in column ${col + 1}`
+  //       );
+  //     } else {
+  //       cols[col][val] = true;
+  //     }
+
+  //     if (blks[blk][val]) {
+  //       state.errorPositions.push(index);
+  //       state.errorMessages.push(
+  //         `${val} occurs more than once in block ${blk + 1}`
+  //       );
+  //     } else {
+  //       blks[blk][val] = true;
+  //     }
+  //   }
+  // }
+  if (state.errorPositions.length > 0) {
+    state.selectedSlot = null;
+  }
+  return state;
+};
+
+const isValidPosition = (state) => {
+  let result = {
+    isValid: true,
+    errorMessages: [],
+    errorPositions: [],
+  };
   let rows = [];
   let cols = [];
   let blks = [];
@@ -49,7 +118,9 @@ const validatePosition = (state) => {
     if (val !== null) {
       let row = Math.floor(index / constants.BOARD_WIDTH);
       let col = index % constants.BOARD_WIDTH;
-      let blk = Math.floor(row / 3) * 3 + Math.floor(col / 3);
+      let blk =
+        Math.floor(row / constants.BOARD_ORDER) * constants.BOARD_ORDER +
+        Math.floor(col / constants.BOARD_ORDER);
       // console.log({ index, val, row, col, blk });
 
       if (rows[row] === undefined) {
@@ -63,37 +134,37 @@ const validatePosition = (state) => {
       }
 
       if (rows[row][val] === true) {
-        state.errorPositions.push(index);
-        state.errorMessages.push(
+        result.errorPositions.push(index);
+        result.errorMessages.push(
           `${val} occurs more than once in row ${row + 1}`
         );
+        result.isValid = false;
       } else {
         rows[row][val] = true;
       }
 
       if (cols[col][val]) {
-        state.errorPositions.push(index);
-        state.errorMessages.push(
+        result.errorPositions.push(index);
+        result.errorMessages.push(
           `${val} occurs more than once in column ${col + 1}`
         );
+        result.isValid = false;
       } else {
         cols[col][val] = true;
       }
 
       if (blks[blk][val]) {
-        state.errorPositions.push(index);
-        state.errorMessages.push(
+        result.errorPositions.push(index);
+        result.errorMessages.push(
           `${val} occurs more than once in block ${blk + 1}`
         );
+        result.isValid = false;
       } else {
         blks[blk][val] = true;
       }
     }
   }
-  if (state.errorPositions.length > 0) {
-    state.selectedSlot = null;
-  }
-  return state;
+  return result;
 };
 
 const setSelectedSlotAsStarterAsNeeded = (state) => {
@@ -191,7 +262,10 @@ const resetBoard = () => {
 };
 
 const randomBoard = () => {
-  let state = cloneDeep(initialState);
+  // pick a position
+  // pick a number
+  // check to see if puzzle is still valid and solvable
+  // if there are enough clues to solve it, unset the add clue flag else set the clue flag
 };
 
 const addPencilMarks = (state, action) => {

@@ -34,6 +34,12 @@ export const resetBoard = () => {
   };
 };
 
+export const randomBoardAction = () => {
+  return {
+    type: actionTypes.RANDOM_BOARD,
+  };
+};
+
 export const randomBoard = () => {
   return {
     type: actionTypes.RANDOM_BOARD,
