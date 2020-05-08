@@ -409,6 +409,11 @@ const solveBoard = (state) => {
   return state;
 };
 
+const resetSolver = (state) => {
+  state.solverHasChangedGuesses = false;
+  return state;
+};
+
 export default function (oldState = initialState, action) {
   let state = cloneDeep(oldState);
   switch (action.type) {
@@ -430,6 +435,8 @@ export default function (oldState = initialState, action) {
       return clearPencilMarks(state);
     case actionTypes.SOLVE_BOARD:
       return solveBoard(state);
+    case actionTypes.RESET_SOLVER:
+      return resetSolver(state);
     default:
       return state;
   }

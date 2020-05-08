@@ -7,3 +7,4 @@ export const RANDOM_BOARD = "RANDOM_BOARD";
 export const ADD_PENCIL_MARKS = "ADD_PENCIL_MARKS";
 export const CLEAR_PENCIL_MARKS = "CLEAR_PENCIL_MARKS";
 export const SOLVE_BOARD = "SOLVE_BOARD";
+export const RESET_SOLVER = "RESET_SOLVER";

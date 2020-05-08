@@ -1,4 +1,5 @@
 import * as constants from "./constants";
+import difference from "lodash/difference";
 
 export const symbols = "123456789ABCDEF0";
 
@@ -40,3 +41,25 @@ export const colIndices = (col, excluding) =>
   grpIndices(colIndexToIndex, col, excluding);
 export const blkIndices = (blk, excluding) =>
   grpIndices(blkIndexToIndex, blk, excluding);
+
+export const removeValuesFromGrp = (state, grp, values) => {
+  for (let grpIndex of grp) {
+    state.pencilMarks[grpIndex] = difference(
+      state.pencilMarks[grpIndex],
+      values
+    );
+  }
+  return state;
+};
+
+export const removeValuesFromRow = (state, row, values, excluding) => {
+  return removeValuesFromGrp(state, rowIndices(row, excluding), values);
+};
+
+export const removeValuesFromCol = (state, col, values, excluding) => {
+  return removeValuesFromGrp(state, colIndices(col, excluding), values);
+};
+
+export const removeValuesFromBlk = (state, blk, values, excluding) => {
+  return removeValuesFromGrp(state, blkIndices(blk, excluding), values);
+};

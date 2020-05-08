@@ -83,11 +83,20 @@ export const solveBoardAction = () => {
   };
 };
 
+export const resetSolverAction = () => {
+  return {
+    type: actionTypes.RESET_SOLVER,
+  };
+};
+
 export const solveBoard = () => {
   return (dispatch, getState) => {
     let state = getState();
     if (state.currentStrategy === null) {
-      dispatch(addPencilMarks(0));
+      if (!state.solverHasChangedGuesses) {
+        dispatch(addPencilMarks(0));
+      }
+      dispatch(resetSolverAction());
     }
     if (state.errorMessages.length === 0 && !state.isSolved) {
       dispatch(solveBoardAction());
