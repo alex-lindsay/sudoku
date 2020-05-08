@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { clearErrors } from "../../store/actions";
+import { clearErrors, clearMessages } from "../../store/actions";
 
 import styles from "./Errors.module.css";
 
@@ -29,7 +29,7 @@ const Errors = (props) => {
       className="alert alert-primary"
       role="alert"
       onClick={() => {
-        dispatch(clearErrors());
+        dispatch(clearMessages());
       }}
     >
       {message}

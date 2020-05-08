@@ -264,6 +264,11 @@ const clearErrors = (state) => {
   return state;
 };
 
+const clearMessages = (state) => {
+  state.messages = [];
+  return state;
+};
+
 const resetBoard = () => {
   return cloneDeep(initialState);
 };
@@ -425,6 +430,8 @@ export default function (oldState = initialState, action) {
       return setNumberModeNewState(action.numberMode, state);
     case actionTypes.CLEAR_ERRORS:
       return clearErrors(state);
+    case actionTypes.CLEAR_MESSAGES:
+      return clearMessages(state);
     case actionTypes.RESET_BOARD:
       return resetBoard();
     case actionTypes.RANDOM_BOARD:

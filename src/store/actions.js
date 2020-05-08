@@ -28,6 +28,12 @@ export const clearErrors = () => {
   };
 };
 
+export const clearMessages = () => {
+  return {
+    type: actionTypes.CLEAR_MESSAGES,
+  };
+};
+
 export const resetBoard = () => {
   return {
     type: actionTypes.RESET_BOARD,
