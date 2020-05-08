@@ -3,6 +3,7 @@ import cloneDeep from "lodash/cloneDeep";
 import * as actionTypes from "./actionTypes";
 import * as constants from "../constants";
 import * as common from "../common";
+import strategies from "../strategies";
 
 const initialState = {
   errorMessages: [],
@@ -13,11 +14,12 @@ const initialState = {
   selectedSlot: null,
   clickMode: null,
   numberMode: null,
+  isSolving: false,
   isSolved: false,
   buildingBoard: false,
-  isSolving: false,
   currentStrategy: null,
   currentStrategyStage: null,
+  messages: [],
 };
 
 const checkForSolved = (state) => {
@@ -358,6 +360,39 @@ const clearPencilMarks = (state) => {
   return state;
 };
 
+const solveBoard = (state) => {
+  if (!state.isSolved) {
+    // If no strategy is yet set, choose the first strategy
+    if (state.currentStrategy === null) {
+      state.currentStrategy = 0;
+      state.currentStrategyStage = null;
+    }
+    // If there is no stage set, choose the first stage,
+    // otherwise move to the next stage.
+    if (state.currentStrategyStage === null) {
+      state.currentStrategyStage = 0;
+    } else {
+      state.currentStrategyStage += 1;
+    }
+    // If the stage had been advanced beyond the current strategy range,
+    // advance to the next strategy and reset the stage
+    if (
+      state.currentStrategyStage >= strategies[state.currentStrategy].stages
+    ) {
+      state.currentStrategy++;
+      state.currentStrategyStage = 0;
+    }
+    if (strategies[state.currentStrategy] !== undefined) {
+      state = strategies[state.currentStrategy].fn(state);
+    } else {
+      state.errorMessages.push(
+        "This puzzle appears not to be solvable by normal strategies."
+      );
+    }
+  }
+  return state;
+};
+
 export default function (oldState = initialState, action) {
   let state = cloneDeep(oldState);
   switch (action.type) {
@@ -377,6 +412,8 @@ export default function (oldState = initialState, action) {
       return addPencilMarks(state, action);
     case actionTypes.CLEAR_PENCIL_MARKS:
       return clearPencilMarks(state);
+    case actionTypes.SOLVE_BOARD:
+      return solveBoard(state);
     default:
       return state;
   }
