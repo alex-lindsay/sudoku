@@ -77,12 +77,20 @@ export const clearPencilMarks = () => {
   };
 };
 
-export const solveBoardAction = (strategy, stage) => {
+export const solveBoardAction = () => {
   return {
     type: actionTypes.SOLVE_BOARD,
   };
 };
 
 export const solveBoard = () => {
-  return (dispatch) => {};
+  return (dispatch, getState) => {
+    let state = getState();
+    if (state.errorMessages.length === 0 && !state.isSolved) {
+      dispatch(solveBoardAction());
+      setTimeout(() => {
+        dispatch(solveBoard());
+      }, 500);
+    }
+  };
 };
