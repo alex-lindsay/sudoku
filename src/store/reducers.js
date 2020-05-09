@@ -4,11 +4,13 @@ import * as actionTypes from "./actionTypes";
 import * as constants from "../constants";
 import * as common from "../common";
 import strategies from "../strategies";
+import { boards } from "../data/testBoards";
 
 const initialState = {
   errorMessages: [],
   errorPositions: [],
-  startingPosition: new Array(constants.BOARD_SLOTS).fill(null),
+  // startingPosition: new Array(constants.BOARD_SLOTS).fill(null),
+  startingPosition: boards["Test Naked Triples"],
   guesses: new Array(constants.BOARD_SLOTS).fill(null),
   pencilMarks: new Array(constants.BOARD_SLOTS).fill(null),
   selectedSlot: null,
