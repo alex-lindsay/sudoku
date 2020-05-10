@@ -109,6 +109,7 @@ const nakedPairsStrategy = (state) => {
   return state;
 };
 
+//TODO This does not account for AB AC BC cycles
 const nakedTriplesStrategy = (state) => {
   let type = null;
   let index = null;
@@ -144,21 +145,9 @@ const nakedTriplesStrategy = (state) => {
     if (!Array.isArray(pencilMarks1) || pencilMarks1.length !== 3) {
       continue;
     }
-    console.log({
-      label: "index1",
-      index1,
-      checking_index1,
-      pencilMarks1,
-    });
     for (let index2 = 0; index2 < checking.length - 1; index2++) {
       let checking_index2 = checking[index2];
       let pencilMarks2 = state.pencilMarks[checking_index2];
-      //   console.log({
-      //     label: "index2",
-      //     index2,
-      //     checking_index2,
-      //     pencilMarks2,
-      //   });
       if (
         index2 === index1 ||
         !Array.isArray(pencilMarks2) ||
@@ -172,12 +161,6 @@ const nakedTriplesStrategy = (state) => {
       for (let index3 = index2 + 1; index3 < checking.length; index3++) {
         let checking_index3 = checking[index3];
         let pencilMarks3 = state.pencilMarks[checking_index3];
-        // console.log({
-        //   label: "index3",
-        //   index3,
-        //   checking_index3,
-        //   pencilMarks3,
-        // });
         if (
           index3 === index1 ||
           !Array.isArray(pencilMarks3) ||
@@ -194,12 +177,6 @@ const nakedTriplesStrategy = (state) => {
               pencilMarkIndex !== checking_index2 &&
               pencilMarkIndex !== checking_index3
             ) {
-              //   console.log({
-              //     checking_index1,
-              //     checking_index2,
-              //     checking_index3,
-              //     pencilMarkIndex,
-              //   });
               state.pencilMarks[pencilMarkIndex] = difference(
                 state.pencilMarks[pencilMarkIndex],
                 pencilMarks1
@@ -215,6 +192,10 @@ const nakedTriplesStrategy = (state) => {
   return state;
 };
 
+const nakedQuadsStrategy = (state) => {
+  return state;
+};
+
 const strategies = [
   { title: "Singles", stages: constants.BOARD_SLOTS, fn: singleStrategy },
   {
@@ -226,6 +207,11 @@ const strategies = [
     title: "Naked Triples",
     stages: constants.BOARD_WIDTH * 3,
     fn: nakedTriplesStrategy,
+  },
+  {
+    title: "Naked Quads",
+    stages: constants.BOARD_WIDTH * 3,
+    fn: nakedQuadsStrategy,
   },
 ];
 
