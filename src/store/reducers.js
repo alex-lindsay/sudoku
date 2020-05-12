@@ -4,13 +4,13 @@ import * as actionTypes from "./actionTypes";
 import * as constants from "../constants";
 import * as common from "../common";
 import strategies from "../strategies";
-import { boards } from "../data/testBoards";
+import { boardNames, boards } from "../data/testBoards";
 
 const initialState = {
   errorMessages: [],
   errorPositions: [],
-  // startingPosition: new Array(constants.BOARD_SLOTS).fill(null),
-  startingPosition: boards["Test Naked Triples"],
+  isAddingPencilMarks: false,
+  startingPosition: new Array(constants.BOARD_SLOTS).fill(null),
   guesses: new Array(constants.BOARD_SLOTS).fill(null),
   pencilMarks: new Array(constants.BOARD_SLOTS).fill(null),
   selectedSlot: null,
@@ -318,6 +318,20 @@ const randomBoard = () => {
   return state;
 };
 
+const testBoard = (state) => {
+  const numberMode = state.numberMode !== null ? state.numberMode : 1;
+  const boardName = boardNames[(numberMode - 1) % boardNames.length];
+  const startingPosition = boards.get(boardName);
+  console.log({
+    numberMode,
+    boardNames,
+    boardName,
+    startingPosition,
+  });
+  state.startingPosition = cloneDeep(startingPosition);
+  return state;
+};
+
 const addPencilMarks = (state, action) => {
   if (action.slots === undefined) {
     return state;
@@ -369,7 +383,15 @@ const clearPencilMarks = (state) => {
   return state;
 };
 
+const addingPencilMarks = (state, action) => {
+  state.isAddingPencilMarks = action.val;
+  return state;
+};
+
 const solveBoard = (state) => {
+  if (state.isAddingPencilMarks) {
+    return state;
+  }
   if (!state.isSolved) {
     // If no strategy is yet set, choose the first strategy
     if (state.currentStrategy === null) {
@@ -389,8 +411,13 @@ const solveBoard = (state) => {
     if (
       state.currentStrategyStage >= strategies[state.currentStrategy].stages
     ) {
-      state.currentStrategy++;
       state.currentStrategyStage = 0;
+      if (!state.solverHasChangedGuesses) {
+        state.currentStrategy++;
+      } else {
+        state.currentStrategy = 0;
+        state.solverHasChangedGuesses = false;
+      }
     }
     if (strategies[state.currentStrategy] !== undefined) {
       state = strategies[state.currentStrategy].fn(state);
@@ -436,10 +463,14 @@ export default function (oldState = initialState, action) {
       return clearMessages(state);
     case actionTypes.RESET_BOARD:
       return resetBoard();
+    case actionTypes.TEST_BOARD:
+      return testBoard(state);
     case actionTypes.RANDOM_BOARD:
       return randomBoard();
     case actionTypes.ADD_PENCIL_MARKS:
       return addPencilMarks(state, action);
+    case actionTypes.ADDING_PENCIL_MARKS:
+      return addingPencilMarks(state, action);
     case actionTypes.CLEAR_PENCIL_MARKS:
       return clearPencilMarks(state);
     case actionTypes.SOLVE_BOARD:

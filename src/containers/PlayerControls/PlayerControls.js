@@ -48,6 +48,10 @@ const PlayerControls = (props) => {
           text="Random Board"
         />
         <PlayerControlButton
+          onClickAction={actions.testBoard}
+          text="Test Board"
+        />
+        <PlayerControlButton
           onClickAction={actions.solveBoard}
           text="Solve Board"
         />

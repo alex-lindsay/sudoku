@@ -52,6 +52,19 @@ export const randomBoard = () => {
   };
 };
 
+export const testBoard = () => {
+  return {
+    type: actionTypes.TEST_BOARD,
+  };
+};
+
+export const addingPencilMarks = (val) => {
+  return {
+    type: actionTypes.ADDING_PENCIL_MARKS,
+    val,
+  };
+};
+
 export const addPencilMarksAction = (slots) => {
   return {
     type: actionTypes.ADD_PENCIL_MARKS,
@@ -63,8 +76,7 @@ export const addPencilMarks = (slot) => {
   return (dispatch) => {
     if (slot === undefined) {
       dispatch(clearPencilMarks());
-    }
-    if (slot === undefined) {
+      dispatch(addingPencilMarks(true));
       slot = 0;
     }
 
@@ -72,6 +84,8 @@ export const addPencilMarks = (slot) => {
       if (slot < constants.BOARD_SLOTS) {
         dispatch(addPencilMarksAction([slot, slot + 1, slot + 2]));
         dispatch(addPencilMarks(slot + 3));
+      } else {
+        dispatch(addingPencilMarks(false));
       }
     }, constants.DELAY_PENCIL_MARKS);
   };

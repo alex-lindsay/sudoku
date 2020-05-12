@@ -5,6 +5,15 @@ import difference from "lodash/difference";
 
 const singleStrategy = (state) => {
   let index = state.currentStrategyStage;
+  //   while (
+  //     index < constants.BOARD_SLOTS &&
+  //     (!Array.isArray(state.pencilMarks) ||
+  //       !Array.isArray(state.pencilMarks[index]) ||
+  //       state.pencilMarks[index].length !== 1)
+  //   ) {
+  //     state.solverIsChecking = { [index]: true };
+  //     index++;
+  //   }
   state.solverIsChecking = { [index]: true };
   state.messages = [
     `The solver is checking slot ${index + 1} for an Open Single.`,
