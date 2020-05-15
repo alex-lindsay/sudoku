@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BOARD_ORDER = 3;
+exports.BOARD_WIDTH = exports.BOARD_ORDER * exports.BOARD_ORDER;
+exports.BOARD_SLOTS = exports.BOARD_WIDTH * exports.BOARD_WIDTH;
+exports.CLICKMODE_STARTERS = "starters";
+exports.CLICKMODE_PENCILMARKS = "pencilMarks";
+exports.CLICKMODE_GUESSES = "guesses";
+exports.DELAY_PENCIL_MARKS = 250;
+exports.DELAY_SOLVE_STAGE = 500;

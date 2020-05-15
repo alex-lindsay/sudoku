@@ -8,7 +8,7 @@ import "./App.css";
 
 function App() {
   return (
-    <div className="App container">
+    <div className="App container" data-testid="app">
       <div className="row">
         <header className="App-header">
           <h1>Sudoku Builder/Solver</h1>
