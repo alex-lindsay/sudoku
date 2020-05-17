@@ -1,7 +1,6 @@
 import * as constants from "./constants";
 import * as common from "./common";
-import isEqual from "lodash/isEqual";
-import difference from "lodash/difference";
+import _ from "lodash";
 
 const singleStrategy = (state) => {
   let index = state.currentStrategyStage;
@@ -164,7 +163,7 @@ const nakedTriplesStrategy = (state) => {
       ) {
         continue;
       }
-      if (difference(pencilMarks2, pencilMarks1).length !== 0) {
+      if (_.difference(pencilMarks2, pencilMarks1).length !== 0) {
         continue;
       }
       for (let index3 = index2 + 1; index3 < checking.length; index3++) {

@@ -1,6 +1,6 @@
 import * as constants from "./constants";
-import difference from "lodash/difference";
-import isInteger from "lodash/isInteger";
+import _ from "lodash";
+import { AppState } from "./interfaces";
 
 export const symbols = "123456789ABCDEF0";
 
@@ -40,10 +40,10 @@ const grpIndices: (
     result.push(rule(grp, index));
   }
   if (excluding !== undefined) {
-    if (!Array.isArray(excluding)) {
-      excluding = [excluding];
-    }
-    result = result.filter((val) => excluding.indexOf(val) === -1);
+    // if (!Array.isArray(excluding)) {
+    //   excluding = [excluding];
+    // }
+    result = result.filter((val) => excluding?.indexOf(val) === -1);
   }
   return result;
 };
@@ -61,9 +61,13 @@ export const blkIndices: (blk: number, excluding?: number[]) => number[] = (
   excluding
 ) => grpIndices(blkIndexToIndex, blk, excluding);
 
-const removeValuesFromGrp = (state, grp, values) => {
+const removeValuesFromGrp = (
+  state: AppState,
+  grp: number[],
+  values: number[]
+) => {
   for (let grpIndex of grp) {
-    state.pencilMarks[grpIndex] = difference(
+    state.pencilMarks[grpIndex] = _.difference(
       state.pencilMarks[grpIndex],
       values
     );
@@ -71,14 +75,29 @@ const removeValuesFromGrp = (state, grp, values) => {
   return state;
 };
 
-export const removeValuesFromRow = (state, row, values, excluding) => {
+export const removeValuesFromRow = (
+  state: AppState,
+  row: number,
+  values: number[],
+  excluding?: number[]
+) => {
   return removeValuesFromGrp(state, rowIndices(row, excluding), values);
 };
 
-export const removeValuesFromCol = (state, col, values, excluding) => {
+export const removeValuesFromCol = (
+  state: AppState,
+  col: number,
+  values: number[],
+  excluding?: number[]
+) => {
   return removeValuesFromGrp(state, colIndices(col, excluding), values);
 };
 
-export const removeValuesFromBlk = (state, blk, values, excluding) => {
+export const removeValuesFromBlk = (
+  state: AppState,
+  blk: number,
+  values: number[],
+  excluding?: number[]
+) => {
   return removeValuesFromGrp(state, blkIndices(blk, excluding), values);
 };

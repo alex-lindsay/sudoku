@@ -6,7 +6,7 @@ import * as common from "../common";
 import strategies from "../strategies";
 import { boardNames, boards } from "../data/testBoards";
 
-const initialState = {
+export const initialState = {
   errorMessages: [],
   errorPositions: [],
   isAddingPencilMarks: false,
